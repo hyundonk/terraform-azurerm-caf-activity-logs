@@ -4,3 +4,8 @@ locals {
   }
   tags                = merge(var.tags,local.module_tag)
 }
+
+data "azurerm_subscription" "current" {
+}
+
+

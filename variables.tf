@@ -6,6 +6,10 @@ variable "location" {
   description = "(Required) Define the region where the resources will be created."
 }
 
+variable "log_analytics_workspace_id" {
+  description = "(Required) Id of the Log Analytics workspace"
+}
+
 variable "tags" {
   description = "(Required) Tags for the logs repositories to be created "
   
@@ -31,3 +35,6 @@ variable "name" {
   description = "(Required) Name for the objects created (before naming convention applied.)"    
 }
 
+variable "audit_settings_object" {
+  description = "(Required) Contains the settings for Azure Audit activity log retention"
+}

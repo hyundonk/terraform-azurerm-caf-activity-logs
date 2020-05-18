@@ -45,6 +45,24 @@ resource "azurerm_eventhub_namespace" "log" {
 
 }
 
+resource "azurerm_monitor_diagnostic_setting" "audit" {
+  name                           = var.name
+  target_resource_id             = data.azurerm_subscription.current.id
+  log_analytics_workspace_id     = var.log_analytics_workspace_id
+  eventhub_authorization_rule_id = var.enable_event_hub ? "${azurerm_eventhub_namespace.log[0].id}/authorizationrules/RootManageSharedAccessKey" : null
+  eventhub_name                  = var.enable_event_hub ? azurerm_eventhub_namespace.log[0].name : null
+  storage_account_id             = azurerm_storage_account.log.id
+
+  dynamic "log" {
+    for_each = var.audit_settings_object.log
+    content {
+      category    = log.value[0]
+      enabled =     log.value[1]
+    }
+  } 
+}
+
+/*
 resource "azurerm_monitor_log_profile" "subscription" {
   name = "default"
 
@@ -110,3 +128,4 @@ storage_account_id = azurerm_storage_account.log.id
     days    = var.logs_rentention
   }
 }
+*/
