@@ -29,6 +29,14 @@ resource "azurerm_storage_account" "log" {
   access_tier               = "Hot"
   enable_https_traffic_only = true
   tags                      = local.tags
+
+  logging {
+    delete  = enabled
+    read    = enabled
+    write   = enabled
+    version = "2"
+    retention_policy_days = "30"
+  }
 }
 
 resource "azurerm_eventhub_namespace" "log" {
