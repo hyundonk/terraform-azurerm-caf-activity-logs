@@ -30,12 +30,14 @@ resource "azurerm_storage_account" "log" {
   enable_https_traffic_only = true
   tags                      = local.tags
 
-  logging {
-    delete  = enabled
-    read    = enabled
-    write   = enabled
-    version = "2"
-    retention_policy_days = "30"
+  blob_properties {
+    logging {
+      delete  = enabled
+      read    = enabled
+      write   = enabled
+      version = "2"
+      retention_policy_days = "30"
+    }
   }
 }
 
